@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include "dependency2.c"
+#include "dependency1.c"
+//extern int func1();
 
-extern int func1();
-
-extern void func2();
+//extern void func2();
 
 int main(){
-    printf("%d",func1());
+    printf("%d\n",func1());
     func2();
     return 0;
 }

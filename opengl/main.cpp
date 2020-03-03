@@ -1,5 +1,8 @@
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
- 
+#endif
 void displayMe(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);

@@ -6,6 +6,7 @@
 void displayMe(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
     //I
     glBegin(GL_POLYGON);
     glVertex2f(-0.3, 0.1);

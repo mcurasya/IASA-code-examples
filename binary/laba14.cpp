@@ -1,8 +1,8 @@
 #include <iostream>
 #include "structs.hpp"
-
+#include <string.h>
+#include <stdlib.h>
 using namespace std;
-using namespace structs;
 
 void add_record();
 void show_records();
@@ -62,9 +62,32 @@ int main(int argc, const char **argv)
 
 void add_record()
 {
+    FILE* file = fopen("records.dat", "ab");
     cout << "input last name->";
     char* name = (char*)calloc(15, sizeof(char));
     scanf("%s", name);
+    structs::record *rec = (structs::record*) malloc(sizeof(structs::record));
+    strcpy(rec->stud.last_name, name);
+    int count = 0;
+    cout << "input marks and input -1 when done";
+    while (count < 10)
+    {
+        short mark;
+        cout<<">>";
+        cin >>  mark;
+        if(mark == -1) {
+            break;
+        }
+        rec->stud.marks[count];
+        ++count;
+    }
+    char* faculty_name = (char*) malloc(sizeof(char) * 10);
+    cout << "enter faculty name >>";
+    scanf("%s", faculty_name);
+    strcpy(rec->fac.name, faculty_name);
+    cout << "enter course>>";
+    cin >> rec->fac.course;
+    
 }
 
 void show_records() {

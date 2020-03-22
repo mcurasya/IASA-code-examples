@@ -7,7 +7,7 @@ void displayMe(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-    //I
+    #region I
     glBegin(GL_POLYGON);
     glVertex2f(-0.3, 0.1);
     glVertex2f(-0.7, 0.1);
@@ -26,6 +26,7 @@ void displayMe(void)
     glVertex2f(-0.6, 0.7);
     glVertex2f(-0.4, 0.7);
     glEnd();
+    #endregion
     //top A
     glBegin(GL_POLYGON);
     glVertex2f(.1, .1);

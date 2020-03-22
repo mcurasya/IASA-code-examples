@@ -3,7 +3,7 @@
 #else
 #include <GL/glut.h>
 #endif
-void displayMe(void)
+void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
@@ -78,11 +78,14 @@ void displayMe(void)
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE);
+    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
     glutInitWindowSize(400, 300);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("Hello world!");
-    glutDisplayFunc(displayMe);
+    glutDisplayFunc(display);
+    #ifdef __APPLE__
+    glutReshapeWindow(400, 300);
+    #endif
     glutMainLoop();
     return 0;
-}
+}   

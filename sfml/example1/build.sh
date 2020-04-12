@@ -1,4 +1,3 @@
-gcc -c main.cpp
-g++ main.o -o app -lsfml-graphics -lsfml-window -lsfml-system
+clang++ -c main.cpp
+clang++ main.o -lsfml-system -lsfml-window -lsfml-graphics -o result
 rm main.o
-./app

@@ -1,24 +1,27 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
+int main(int argc, char const *argv[])
+{
+    //initialise
+    sf::RenderWindow window(sf::VideoMode(1200, 900), "example 1");
 
-using namespace sf;
-using namespace std;
-
-int main(int argc, const char** argv) {
-    RenderWindow window(VideoMode(800, 600), "function graph");
+    //main loop
     while (window.isOpen())
     {
-        Event event;
+        sf::Event event;
+        //event loop
         while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed){
+            if(event.type == sf::Event::Closed)
+            {
                 window.close();
             }
         }
+        //update 
+
+        //redraw
         window.clear();
         window.display();
-        
     }
     
     return 0;

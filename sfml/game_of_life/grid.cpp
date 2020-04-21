@@ -4,6 +4,18 @@ grid::~grid(){
 
 }
 
+void grid::clear(){
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < columns; j++)
+        {
+            cells[i][j] = 0;
+        }
+        
+    }
+    
+}
+
 grid::grid(const sf::RenderWindow& window, int cell_width){
     this->cell_width = cell_width;
     sf::Vector2u sizes = window.getSize();
@@ -14,6 +26,7 @@ grid::grid(const sf::RenderWindow& window, int cell_width){
     {
         cells[i] = new int[columns];
     }
+    clear();
    
 }
 void grid::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -22,12 +35,13 @@ void grid::draw(sf::RenderTarget& target, sf::RenderStates states) const{
         for (size_t j = 0; j < columns; j++)
         {
             if(cells[i][j]){
-                sf::RectangleShape square(sf::Vector2f(cell_width, cell_width));
-                square.setFillColor(sf::Color::White);
-                square.setOutlineThickness(-2);
-                square.setOutlineColor(sf::Color::Black);
-                square.setPosition(cell_width * j, cell_width * i);
-                target.draw(square);
+                //sf::RectangleShape cell(sf::Vector2f(cell_width, cell_width));
+                sf::CircleShape cell(cell_width/2);
+                cell.setFillColor(sf::Color::White);
+                cell.setOutlineThickness(-2);
+                cell.setOutlineColor(sf::Color::Black);
+                cell.setPosition(cell_width * j, cell_width * i);
+                target.draw(cell);
             }
         }
         
@@ -75,4 +89,16 @@ void grid::handleclick(int x, int y){
     x/=cell_width;
     y/=cell_width;
     cells[y][x] = !cells[y][x];
+}
+
+void grid::generateRandomGrid(){
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < columns; j++)
+        {
+            cells[i][j] = rand() % 2;
+        }
+        
+    }
+    
 }

@@ -12,6 +12,8 @@ public:
     ~grid();
     void update();
     void handleclick(int x, int y);
+    void clear();
+    void generateRandomGrid();
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; 
 };

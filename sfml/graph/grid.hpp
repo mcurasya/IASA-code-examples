@@ -2,7 +2,7 @@
 #include <vector>
 namespace sf
 {
-class grid
+class grid : public sf::Drawable
 {
 private:
     sf::Font font;
@@ -21,6 +21,7 @@ private:
 public:
     grid(float step_x=1, float step_y=1, float x_coefficient=100, float y_coefficient=100, float bounds_x=50, float bounds_y=50, int numbers_after_comma=2);
     ~grid();
-    void draw(sf::RenderWindow &window);
+    private:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const; 
 };
 } // namespace sf

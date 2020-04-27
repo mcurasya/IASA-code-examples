@@ -1,4 +1,4 @@
 g++ -c main.cpp grid.cpp
-g++ main.o grid.o -o app -lsfml-graphics -lsfml-window -lsfml-system
+g++ main.o grid.o -o result -lsfml-graphics -lsfml-window -lsfml-system
 rm main.o grid.o
-./app
+./result

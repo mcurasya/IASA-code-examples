@@ -14,36 +14,36 @@ sf::grid::grid(float step_x, float step_y, float x_coefficient, float y_coeffici
     this->font = Font();
     font.loadFromFile("font.ttf");
 }
-void sf::grid::draw(sf::RenderWindow &window)
+void sf::grid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    window.draw(&lines[0], lines.size(), Lines);
+    target.draw(&lines[0], lines.size(), Lines);
     sf::Text pozn;
     pozn.setFont(font);
     pozn.setCharacterSize(25);
     pozn.setPosition(offset_x, offset_y);;
     pozn.setString(std::to_string(0));
-    window.draw(pozn);
+    target.draw(pozn);
     for (float i = step_x; i <= bounds_x; i += step_x)
     {
         pozn.setPosition(i * coeffitient_x + offset_x, offset_y);
         std::string num = std::to_string(i);
         pozn.setString(num.substr(0, num.find('.') + numbers_after_comma));
-        window.draw(pozn);
+        target.draw(pozn);
         pozn.setPosition(-i * coeffitient_x + offset_x, offset_y);
         num = std::to_string(-i);
         pozn.setString(num.substr(0, num.find('.') + numbers_after_comma));
-        window.draw(pozn);
+        target.draw(pozn);
     }
     for (float i = step_y; i <= bounds_y; i += step_y)
     {
         pozn.setPosition(offset_x, coeffitient_y * i + offset_y);
         std::string num = std::to_string(-i);
         pozn.setString(num.substr(0, num.find('.') + numbers_after_comma));
-        window.draw(pozn);
+        target.draw(pozn);
         pozn.setPosition(offset_x, -coeffitient_y * i + offset_y);
         num = std::to_string(i);
         pozn.setString(num.substr(0, num.find('.') + numbers_after_comma));
-        window.draw(pozn);
+        target.draw(pozn);
     }
 }
 

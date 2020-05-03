@@ -1,11 +1,11 @@
 #include <iostream>
 #include "structs.hpp"
 #include <cstring>
-void clear();
+extern void clear();
 int main()
 {
     clear();
-    FILE* f = fopen("data", "rb");
+    FILE *f = fopen("data", "rb");
     if (!f)
     {
         f = fopen("data", "wb");
@@ -32,11 +32,11 @@ int main()
                                show_best_students,
                                show_good_groups,
                                show_all_students};
+        clear();
         if (choice == 0)
         {
             break;
         }
-        clear();
         if (choice > sizeof(actions) / sizeof(actions[0]))
         {
             std::cout << "sorry, you made a mistake, try again\n";
@@ -45,13 +45,4 @@ int main()
 
         actions[choice - 1]();
     }
-}
-
-void clear()
-{
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
 }

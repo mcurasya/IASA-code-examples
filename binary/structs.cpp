@@ -12,6 +12,8 @@ void delete_course_year();
 void delete_faculty_name();
 void delete_everyting();
 
+extern void clear();
+
 void add_student()
 {
     char facname[20];
@@ -126,16 +128,16 @@ again:
                            change_group_name,
                            change_course_year,
                            change_faculty_name};
-    cout << "all students:\n";
     show_all_students();
     cout << "enter your choice:\n"
          << "1)change student name\n"
          << "2)change group name\n"
          << "3)change course year\n"
          << "4)change faculty name\n"
-         << "0)go back"
+         << "0)go back\n"
          << ">> ";
     cin >> choice;
+    clear();
     if (choice == 0)
     {
         return;
@@ -146,6 +148,7 @@ again:
         goto again;
     }
     choices[choice - 1]();
+    clear();
 }
 void delete_data()
 {
@@ -156,7 +159,6 @@ again:
                            delete_course_year,
                            delete_faculty_name,
                            delete_everyting};
-    cout << "all students:\n";
     show_all_students();
     cout << "enter your choice:\n"
          << "1)delete student name\n"
@@ -164,9 +166,10 @@ again:
          << "3)delete course year\n"
          << "4)delete faculty name\n"
          << "5)delete everything\n"
-         << "0)go back"
+         << "0)go back\n"
          << ">> ";
     cin >> choice;
+    clear();
     if (choice == 0)
     {
         return;
@@ -177,6 +180,7 @@ again:
         goto again;
     }
     choices[choice - 1]();
+    clear();
 }
 void show_best_course()
 {

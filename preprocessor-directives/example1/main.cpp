@@ -2,7 +2,7 @@
 #include <stdio.h>
 int main(int argc, char const *argv[])
 {
-    printf("%d", SQR(5));
-    printf("%c", SQR('\t'));
+    printf("%d\n", SQR(5)); //will compute correctly
+    printf("%c", SQR('\t'));  //still is computable but logically incorrect
     return 0;
 }

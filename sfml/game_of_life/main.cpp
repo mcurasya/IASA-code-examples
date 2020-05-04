@@ -7,29 +7,30 @@
 int main(int argc, const char **argv)
 {
     srand(std::time(NULL));
+    //create window
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "game of life");
-    grid gr(window, 25);
-    window.setFramerateLimit(10);
-    int framerateLimit = 10;
+    grid gr(window, 25);     //create grid
+    int framerateLimit = 10; //technically the speed of update
+    window.setFramerateLimit(framerateLimit);
     sf::Font font;
-    sf::Text status;
+    sf::Text status; //status marker
     font.loadFromFile("FG.ttf");
     status.setFont(font);
     status.setString("pause");
     status.setCharacterSize(50);
     status.setFillColor(sf::Color::Green);
     status.move(20, 10);
-    sf::Text fps;
+    sf::Text fps; //update speed marker
     fps.setFont(font);
     fps.setString("fps: " + std::to_string(framerateLimit));
     fps.setCharacterSize(50);
     fps.setFillColor(sf::Color::Magenta);
     fps.setOrigin(fps.getLocalBounds().width, 0);
     fps.setPosition(window.getSize().x - 50, 10);
-    int simulate = 0;
+    int simulate = 0; //simulation status
     while (window.isOpen())
     {
-        sf::Event event;
+        sf::Event event; //check for events
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -40,17 +41,17 @@ int main(int argc, const char **argv)
             {
                 if (event.key.code == sf::Keyboard::Enter or event.key.code == sf::Keyboard::Space)
                 {
-                    simulate = !simulate;
+                    simulate = !simulate; //change simulation status
                 }
                 if (event.key.code == sf::Keyboard::Tab)
                 {
-                    gr.clear();
+                    gr.clear(); //clear screen
                 }
                 if (event.key.code == sf::Keyboard::R)
                 {
-                    gr.generateRandomGrid();
+                    gr.generateRandomGrid(); //random grid generator
                 }
-                if (event.key.code == sf::Keyboard::Up)
+                if (event.key.code == sf::Keyboard::Up) //change update speed
                 {
                     if (framerateLimit < 120)
                         framerateLimit += 2;
@@ -65,7 +66,7 @@ int main(int argc, const char **argv)
                     window.setFramerateLimit(framerateLimit);
                 }
             }
-            if (event.type == sf::Event::MouseButtonPressed)
+            if (event.type == sf::Event::MouseButtonPressed) //change pressed cell state
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
@@ -80,7 +81,8 @@ int main(int argc, const char **argv)
         }
 
         if (simulate)
-            gr.update();
+            gr.update(); //update if sumulation
+        //redraw
         window.clear(sf::Color::Black);
         window.draw(gr);
         window.draw(fps);

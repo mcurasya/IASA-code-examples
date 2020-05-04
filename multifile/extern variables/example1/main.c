@@ -2,6 +2,6 @@
 
 extern int var;
 int main(){
-	printf("%d", var);
+	printf("%d", var); //is visible in this file with extern
 	return 0;
 }

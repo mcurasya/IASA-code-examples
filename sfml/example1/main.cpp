@@ -5,6 +5,7 @@ int main(int argc, char const *argv[])
     //initialise
     float rotationspeed = 0.f;
     sf::RenderWindow window(sf::VideoMode(1200, 900), "example 1");
+    //create square
     sf::RectangleShape square(sf::Vector2f(250, 250));
     square.setFillColor(sf::Color::Cyan);
     square.setOutlineColor(sf::Color::Green);
@@ -22,13 +23,15 @@ int main(int argc, char const *argv[])
             {
                 window.close();
             }
-            if (event.type == sf::Event::KeyPressed)
+            if (event.type == sf::Event::KeyPressed) //keyboard events
             {
-                if(event.key.code == sf::Keyboard::Up && rotationspeed < 1.f){
-                    rotationspeed+=0.01;
+                if (event.key.code == sf::Keyboard::Up && rotationspeed < 1.f)
+                {
+                    rotationspeed += 0.01;
                 }
-                if(event.key.code == sf::Keyboard::Down && rotationspeed > -1.f){
-                    rotationspeed-=0.01;
+                if (event.key.code == sf::Keyboard::Down && rotationspeed > -1.f)
+                {
+                    rotationspeed -= 0.01;
                 }
             }
         }

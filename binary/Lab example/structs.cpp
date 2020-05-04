@@ -25,6 +25,7 @@ void add_student()
 
     faculty curr_fac;
     FILE *f = fopen("data", "r+b");
+    //======== get date from user ===========
     cout << "enter faculty name >> ";
     cin >> facname;
     cout << "enter course year >> ";
@@ -39,40 +40,41 @@ void add_student()
         cout << ">> ";
         cin >> marks[i];
     }
+    //======================================
     faculty fac;                                     //it should not be here but still
     while (fread(&curr_fac, sizeof(curr_fac), 1, f)) //go through faculties
     {
-        if (!strcmp(facname, curr_fac.name))
+        if (!strcmp(facname, curr_fac.name)) //if faculty exists
         {
             for (size_t i = 0; i < 10; i++) //through courses
             {
-                if (curr_fac.courses[i].year == year)
+                if (curr_fac.courses[i].year == year) //if such year exists
                 {
                     for (size_t j = 0; j < 20; j++) //through groups
                     {
-                        if (!strcmp(groupname, curr_fac.courses[i].groups[j].name))
+                        if (!strcmp(groupname, curr_fac.courses[i].groups[j].name)) //if course exists
                         {
                             for (size_t k = 0; k < 30; k++) //find empty place for student
                             {
                                 if (!strcmp(student_first_name, curr_fac.courses[i].groups[j].students[k].first_name) and !strcmp(student_last_name, curr_fac.courses[i].groups[j].students[k].last_name))
-                                {
+                                { //if name exists
                                     cout << "sorry, such student already exists";
                                     fclose(f);
                                     return;
                                 }
-                                if (!strlen(curr_fac.courses[i].groups[j].students[k].first_name))
+                                if (!strlen(curr_fac.courses[i].groups[j].students[k].first_name)) //find empty spot
                                 {
                                     strcpy(curr_fac.courses[i].groups[j].students[k].first_name, student_first_name);
                                     strcpy(curr_fac.courses[i].groups[j].students[k].last_name, student_last_name);
                                     for (int g = 0; g < 5; g++)
                                     {
                                         curr_fac.courses[i].groups[j].students[k].marks[g] = marks[g];
-                                    }
+                                    } //write data
                                     goto write;
                                 }
                             }
                         }
-                        if (!strlen(curr_fac.courses[i].groups[j].name))
+                        if (!strlen(curr_fac.courses[i].groups[j].name)) //find empty spot
                         {
                             strcpy(curr_fac.courses[i].groups[j].name, groupname);
                             strcpy(curr_fac.courses[i].groups[j].students[0].first_name, student_first_name);
@@ -85,7 +87,7 @@ void add_student()
                         }
                     }
                 }
-                if (curr_fac.courses[i].year == 0)
+                if (curr_fac.courses[i].year == 0) //find empty spot
                 {
                     curr_fac.courses[i].year = year;
                     strcpy(curr_fac.courses[i].groups[0].name, groupname);
@@ -100,6 +102,7 @@ void add_student()
             }
         }
     }
+    //if not found, create new faculty
     strcpy(fac.name, facname);
     fac.courses[0].year = year;
     strcpy(fac.courses[0].groups[0].name, groupname);
@@ -113,14 +116,14 @@ void add_student()
     fclose(f);
     cout << "student was added! \n";
     return;
-write:
+write: //else update file
     fseek(f, -sizeof(curr_fac), SEEK_CUR);
     fwrite(&curr_fac, sizeof(curr_fac), 1, f);
     fclose(f);
     cout << "student was added! \n";
 }
 
-void change_data()
+void change_data() //used same thing as with main function
 {
 again:
     int choice;
@@ -145,12 +148,12 @@ again:
     if (choice > sizeof(choices) / sizeof(choices[0]))
     {
         cout << "sorry, try again";
-        goto again;
+        goto again; //try again, could be infinite cycle, but this is okay too
     }
     choices[choice - 1]();
     clear();
 }
-void delete_data()
+void delete_data() //used same thing as with main function
 {
 again:
     int choice;
@@ -182,6 +185,8 @@ again:
     choices[choice - 1]();
     clear();
 }
+
+//compute number of best students for every faculty and course, show that data
 void show_best_course()
 {
     FILE *f = fopen("data", "rb");
@@ -243,6 +248,7 @@ void show_best_course()
     cout << "best course -> " << best_course.year << endl;
     fclose(f);
 }
+//find all best students, format using tabs
 void show_best_students()
 {
     FILE *f = fopen("data", "rb");
@@ -293,6 +299,7 @@ void show_best_students()
     }
     fclose(f);
 }
+//find groups without bad students
 void show_good_groups()
 {
     FILE *f = fopen("data", "rb");
@@ -336,6 +343,7 @@ void show_good_groups()
     fclose(f);
 }
 
+//go through file and print data on every student
 void show_all_students()
 {
     FILE *f = fopen("data", "rb");
@@ -376,6 +384,7 @@ void show_all_students()
     }
 }
 
+//find student with given name, change to other one or print a mistake
 void change_name()
 {
     faculty curr_fac;
@@ -430,7 +439,7 @@ void change_name()
     cout << "sorry, couldn`t find fuch student\n";
     fclose(f);
 }
-
+//do the same for groups
 void change_group_name()
 {
     faculty curr_fac;
@@ -471,7 +480,7 @@ void change_group_name()
     cout << "sorry couldnt find such group\n";
     fclose(f);
 }
-
+//years
 void change_course_year()
 {
     faculty curr_fac;
@@ -509,7 +518,7 @@ void change_course_year()
     cout << "sorry, couldn`t find such course\n";
     fclose(f);
 }
-
+//and faculties
 void change_faculty_name()
 {
     faculty curr_fac;
@@ -535,7 +544,7 @@ void change_faculty_name()
     cout << "sorry, couldn`t find such faculty\n";
     fclose(f);
 }
-//TODO delete name
+//put an empty struct on a place of a student or print a mistake
 void delete_name()
 {
     faculty curr_fac;
@@ -584,6 +593,7 @@ void delete_name()
         }
     }
 }
+//put an empty struct on a place of a group or print a mistake
 void delete_group_name()
 {
     faculty curr_fac;
@@ -622,6 +632,7 @@ void delete_group_name()
         }
     }
 }
+//put an empty struct on a place of a course or print a mistake
 void delete_course_year()
 {
     faculty curr_fac;
@@ -653,7 +664,7 @@ void delete_course_year()
 }
 void delete_faculty_name()
 {
-    FILE *tempf = fopen("temp", "wb");
+    FILE *tempf = fopen("temp", "wb"); //create new file
     FILE *f = fopen("data", "rb");
     faculty curr_fac;
     char facname[20];
@@ -665,16 +676,16 @@ void delete_faculty_name()
         {
             continue;
         }
-        fwrite(&curr_fac, sizeof(curr_fac), 1, tempf);
+        fwrite(&curr_fac, sizeof(curr_fac), 1, tempf); //write every faculty except the one deleted
     }
     fclose(f);
     fclose(tempf);
-    remove("data");
-    rename("temp", "data");
+    remove("data");         //remove old file
+    rename("temp", "data"); //rename a new one
 }
 void delete_everyting()
 {
-    remove("data");
-    FILE *f = fopen("data", "wb");
+    remove("data"); //remove old file 
+    FILE *f = fopen("data", "wb"); //create new empty one
     fclose(f);
 }

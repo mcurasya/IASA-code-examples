@@ -1,6 +1,7 @@
 #include <iostream>
 #include "structs.hpp"
 #include <cstring>
+#include <stdio.h>
 extern void clear();
 int main()
 {

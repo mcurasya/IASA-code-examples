@@ -1,8 +1,10 @@
 #include "structs.hpp"
 #include <iostream>
 #include <cstring>
+#include <stdio.h>
+
 using namespace std;
-void change_name();
+void change_student();
 void change_group_name();
 void change_course_year();
 void change_faculty_name();
@@ -127,13 +129,13 @@ void change_data() //used same thing as with main function
 {
 again:
     int choice;
-    void (*choices[])() = {change_name,
+    void (*choices[])() = {change_student,
                            change_group_name,
                            change_course_year,
                            change_faculty_name};
     show_all_students();
     cout << "enter your choice:\n"
-         << "1)change student name\n"
+         << "1)change student data\n"
          << "2)change group name\n"
          << "3)change course year\n"
          << "4)change faculty name\n"
@@ -375,9 +377,16 @@ void show_all_students()
                         continue;
                     }
 
-                    cout << "\t\t\t" << curr_fac.courses[i].groups[j].students[k].first_name
+                    cout << "\t\t\t"
+                         << curr_fac.courses[i].groups[j].students[k].first_name
                          << " "
                          << curr_fac.courses[i].groups[j].students[k].last_name << endl;
+                    cout << "\t\t\t\tmarks: ";
+                    for (size_t g = 0; g < 5; g++)
+                    {
+                        cout << curr_fac.courses[i].groups[j].students[k].marks[g] << " ";
+                    }
+                    cout << endl;
                 }
             }
         }
@@ -385,7 +394,7 @@ void show_all_students()
 }
 
 //find student with given name, change to other one or print a mistake
-void change_name()
+void change_student()
 {
     faculty curr_fac;
     FILE *f = fopen("data", "r+b");
@@ -393,8 +402,8 @@ void change_name()
     char newname[20];
     char old_first_name[20];
     char old_last_name[20];
-    char new_first_name[20];
-    char new_last_name[20];
+    char new_first_name[20] = {0};
+    char new_last_name[20] = {0};
     char facname[20];
     cout << "enter name of the faculty >> ";
     cin >> facname;
@@ -402,8 +411,15 @@ void change_name()
     cin >> groupname;
     cout << "enter a student name >> ";
     cin >> old_first_name >> old_last_name;
-    cout << "enter a new student name >> ";
-    cin >> new_first_name >> new_last_name;
+    cout << "do you want to change student name? [y/n] >> ";
+    char name_choice;
+    cin >> name_choice;
+    cin.clear();
+    if (name_choice == 'y')
+    {
+        cout << "enter a new student name >> ";
+        cin >> new_first_name >> new_last_name;
+    }
     while (fread(&curr_fac, sizeof(curr_fac), 1, f))
     {
         if (!strcmp(facname, curr_fac.name))
@@ -422,12 +438,45 @@ void change_name()
                         {
                             if (!strcmp(curr_fac.courses[i].groups[j].students[k].first_name, old_first_name) and !strcmp(curr_fac.courses[i].groups[j].students[k].last_name, old_last_name))
                             {
-                                strcpy(curr_fac.courses[i].groups[j].students[k].first_name, new_first_name);
-                                strcpy(curr_fac.courses[i].groups[j].students[k].last_name, new_last_name);
+                                if (name_choice == 'y')
+                                {
+                                    strcpy(curr_fac.courses[i].groups[j].students[k].first_name, new_first_name);
+                                    strcpy(curr_fac.courses[i].groups[j].students[k].last_name, new_last_name);
+                                    cout << "name changed\n";
+                                }
+                                while (true)
+                                {
+                                    cout << "do you wanna change marks? [y/n] >> ";
+                                    char marks_choice;
+                                    cin >> marks_choice;
+                                    cin.clear();
+                                    if (marks_choice == 'y')
+                                    {
+                                        cout << "old marks are:\n";
+                                        for (int g = 0; g < 5; ++g)
+                                        {
+                                            cout << curr_fac.courses[i].groups[j].students[k].marks[g] << endl;
+                                        }
+                                        cout << "enter new ones\n";
+                                        for (int g = 0; g < 5; ++g)
+                                        {
+                                            short mark;
+                                            cout << ">> ";
+                                            cin >> mark;
+                                            curr_fac.courses[i].groups[j].students[k].marks[g] = mark;
+                                        }
+                                        cout << "marks changed";
+                                        break;
+                                    }
+                                    if (marks_choice == 'n')
+                                    {
+                                        break;
+                                    }
+                                    cout << "sorry I don`t understand your choice, please try again\n";
+                                }
                                 fseek(f, -sizeof(curr_fac), SEEK_CUR);
                                 fwrite(&curr_fac, sizeof(curr_fac), 1, f);
                                 fclose(f);
-                                cout << "name changed\n";
                                 return;
                             }
                         }
@@ -685,7 +734,7 @@ void delete_faculty_name()
 }
 void delete_everyting()
 {
-    remove("data"); //remove old file 
+    remove("data");                //remove old file
     FILE *f = fopen("data", "wb"); //create new empty one
     fclose(f);
 }

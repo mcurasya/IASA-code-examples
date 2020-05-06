@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 using namespace std;
+
 void change_student();
 void change_group_name();
 void change_course_year();

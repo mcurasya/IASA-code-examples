@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "__cxx_version": "cpp",
-        "functional": "cpp",
-        "vector": "cpp",
-        "iosfwd": "cpp",
-        "iterator": "cpp"
-    }
-}

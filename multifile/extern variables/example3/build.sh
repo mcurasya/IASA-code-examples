@@ -1,3 +1,3 @@
-gcc -c main.c ext.c
-gcc main.o ext.o -o result
-rm main.o ext.o
+gcc -c main.c ext1.c ext2.c
+gcc main.o ext1.o ext2.o -o result
+rm main.o ext1.o ext2.o

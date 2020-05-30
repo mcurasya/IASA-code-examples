@@ -10,22 +10,22 @@ float func(float x) //function that is needed to be drawn
     return 3 - 1 / x;
 }
 //creates points that will be plotted on our graph
-std::vector<sf::Vertex> getPoints(float from, float to, float coeffitient_x, float coeffitient_y)
+sf::VertexArray getPoints(float from, float to, float coeffitient_x, float coeffitient_y)
 {
-    std::vector<sf::Vertex> arr; //array of points
+    sf::VertexArray arr(sf::LineStrip); //array of points
     for (float x = from; x < to - 2 * from; x += 0.01)
     {
         sf::Vertex point = sf::Vertex(sf::Vector2f(coeffitient_x * x, -func(x) * coeffitient_y));
         point.color = sf::Color::White;
         //check if an asymtote
-        if (arr.size() and (point.position.y / coeffitient_y) / (arr[arr.size() - 1].position.y / coeffitient_y) < 0 and point.position.y > 10)
+        if (arr.getVertexCount() and (point.position.y / coeffitient_y) / (arr[arr.getVertexCount() - 1].position.y / coeffitient_y) < 0 and point.position.y > 10)
         {
             //make them transparent
             point.color = sf::Color::Transparent;
-            arr[arr.size() - 1].color = sf::Color::Transparent;
+            arr[arr.getVertexCount() - 1].color = sf::Color::Transparent;
         }
         //add point to an array
-        arr.push_back(point);
+        arr.append(point);
     }
     return arr;
 }
@@ -45,7 +45,7 @@ int main(int argc, const char **argv)
     int bounds = 100;
     int coefficient = 100;
     sf::grid gr(1, 1, coefficient, coefficient, bounds, bounds, 1);
-    std::vector<sf::Vertex> values = getPoints(-bounds, bounds, coefficient, coefficient);
+    sf::VertexArray values = getPoints(-bounds, bounds, coefficient, coefficient);
 
     sf::View view(sf::Vector2f(0, 0), sf::Vector2f(1500, 1500)); //view that will be moved
     window.setView(view);
@@ -96,7 +96,7 @@ int main(int argc, const char **argv)
         window.clear();
         window.setView(view);
         window.draw(gr);
-        window.draw(&values[0], values.size() / 2, sf::LineStrip);
+        window.draw(values);
         window.display();
          //=========================================
     }

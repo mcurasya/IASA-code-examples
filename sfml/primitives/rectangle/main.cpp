@@ -1,17 +1,12 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
-
+using namespace sf;
 
 int main(int argc, char const *argv[])
 {
-    std::cout << "please enter number of points you want->";
-    int point_count;
-    std::cin >> point_count;
-    //initialise
-    sf::RenderWindow window(sf::VideoMode(1200, 900), "circle example");
-    sf::CircleShape circle(250, point_count);
-    while (window.isOpen())
+    RenderWindow window(sf::VideoMode(1200, 900), "window");
+    RectangleShape rect(Vector2f(250, 200));
+     while (window.isOpen())
     {
         sf::Event event;
         //event loop
@@ -25,7 +20,7 @@ int main(int argc, char const *argv[])
         //update
         //redraw
         window.clear();
-        window.draw(circle);
+        window.draw(rect);
         window.display();
     }
     return 0;

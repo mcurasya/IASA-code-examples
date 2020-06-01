@@ -9,6 +9,7 @@ int main(){
     text.setFont(font);
     text.setString("Hello world!");
     text.setCharacterSize(150);
+    text.setStyle(sf::Text::Bold | sf::Text::StrikeThrough | sf::Text::Italic);
     while (window.isOpen())
     {
         sf::Event event;

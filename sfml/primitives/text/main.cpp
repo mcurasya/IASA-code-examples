@@ -9,12 +9,6 @@ int main(){
     text.setFont(font);
     text.setString("Hello world!");
     text.setCharacterSize(150);
-    text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
-    text.setPosition(window.getSize().x/2, window.getSize().y/2);
-    text.setStyle(sf::Text::Bold | sf::Text::StrikeThrough | sf::Text::Italic);
-    text.setFillColor(sf::Color::Green);
-    text.setOutlineColor(sf::Color::Magenta);
-    text.setOutlineThickness(3);
     while (window.isOpen())
     {
         sf::Event event;

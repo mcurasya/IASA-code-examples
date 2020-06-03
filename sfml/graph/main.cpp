@@ -39,10 +39,10 @@ int main(int argc, const char **argv)
     window.setVerticalSyncEnabled(true);
     sf::Font font;
     font.loadFromFile("font.ttf");
+    float zoom_coefficient = 1; //coefficient of zooming
     //some of needed constants
-    float moving_speed = 40;
-    float zoom_coefficient = 1;
-    int bounds = 100;
+    float moving_speed = 40; //speed of traversing a graph
+    int bounds = 100;        //bounds of graph creating
     int coefficient = 100;
     sf::grid gr(1, 1, coefficient, coefficient, bounds, bounds, 1);
     sf::VertexArray values = getPoints(-bounds, bounds, coefficient, coefficient);
@@ -54,37 +54,37 @@ int main(int argc, const char **argv)
         sf::Event event; // check for events
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) //check if window is closed
             {
                 window.close();
             }
             if (event.type == sf::Event::KeyPressed) //key pressed events
             {
                 //==========  move  =======================
-                if (event.key.code == sf::Keyboard::H)
+                if (event.key.code == sf::Keyboard::H) //move left
                 {
                     view.move(-zoom_coefficient * moving_speed, 0);
                 }
-                if (event.key.code == sf::Keyboard::J)
+                if (event.key.code == sf::Keyboard::J) //move down
                 {
                     view.move(0, zoom_coefficient * moving_speed);
                 }
-                if (event.key.code == sf::Keyboard::K)
+                if (event.key.code == sf::Keyboard::K) //move up
                 {
                     view.move(0, -zoom_coefficient * moving_speed);
                 }
-                if (event.key.code == sf::Keyboard::L)
+                if (event.key.code == sf::Keyboard::L) //move right
                 {
                     view.move(zoom_coefficient * moving_speed, 0);
                 }
                 //=========================================
                 //============  zoom  =====================
-                if (event.key.code == sf::Keyboard::X)
+                if (event.key.code == sf::Keyboard::X) //make graph bigger
                 {
                     view.zoom(1.1f);
                     zoom_coefficient *= 1.1;
                 }
-                if (event.key.code == sf::Keyboard::Z)
+                if (event.key.code == sf::Keyboard::Z) //make graph smaller
                 {
                     view.zoom(0.9f);
                     zoom_coefficient *= 0.9;
@@ -98,7 +98,7 @@ int main(int argc, const char **argv)
         window.draw(gr);
         window.draw(values);
         window.display();
-         //=========================================
+        //=========================================
     }
 
     return 0;

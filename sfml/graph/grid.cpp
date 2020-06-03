@@ -17,7 +17,7 @@ sf::grid::grid(float step_x, float step_y, float x_coefficient, float y_coeffici
 void sf::grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(lines); //draw lines
-    sf::Text pozn;                               //variable for text markers
+    sf::Text pozn;      //variable for text markers
     pozn.setFont(font);
     pozn.setCharacterSize(25);
     pozn.setPosition(offset_x, offset_y);
@@ -56,7 +56,7 @@ void sf::grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 sf::VertexArray sf::grid::init()
 {
-    sf::VertexArray line(Lines); //vector of points
+    sf::VertexArray line(Lines);                       //vector of points
     for (float i = 0; i < bounds_x; i += this->step_x) //veritcal lines
     {
         //top point of right half

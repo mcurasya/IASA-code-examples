@@ -26,6 +26,7 @@ int main(int argc, char const *argv[])
                 show = true;
                 circle.setPosition(event.mouseButton.x, event.mouseButton.y);
             }
+            
         }
         window.clear();
         if (show)

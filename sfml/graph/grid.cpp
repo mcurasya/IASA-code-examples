@@ -16,7 +16,7 @@ sf::grid::grid(float step_x, float step_y, float x_coefficient, float y_coeffici
 }
 void sf::grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(&lines[0], lines.size(), Lines); //draw lines
+    target.draw(lines); //draw lines
     sf::Text pozn;                               //variable for text markers
     pozn.setFont(font);
     pozn.setCharacterSize(25);
@@ -54,9 +54,9 @@ void sf::grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
     }
 }
 
-std::vector<sf::Vertex> sf::grid::init()
+sf::VertexArray sf::grid::init()
 {
-    std::vector<sf::Vertex> line; //vector of points
+    sf::VertexArray line(Lines); //vector of points
     for (float i = 0; i < bounds_x; i += this->step_x) //veritcal lines
     {
         //top point of right half
@@ -66,7 +66,7 @@ std::vector<sf::Vertex> sf::grid::init()
         {
             top.color = Color::White;
         }
-        line.push_back(top);
+        line.append(top);
         //bottom point of right half
         Vertex bottom = Vector2f(i * coeffitient_x, bounds_y * coeffitient_y);
         bottom.color = Color::Red;
@@ -74,7 +74,7 @@ std::vector<sf::Vertex> sf::grid::init()
         {
             bottom.color = Color::White;
         }
-        line.push_back(bottom);
+        line.append(bottom);
         //top point of left half
         top = Vector2f(-i * coeffitient_x, -bounds_y * coeffitient_y);
         top.color = Color::Green;
@@ -82,7 +82,7 @@ std::vector<sf::Vertex> sf::grid::init()
         {
             top.color = Color::White;
         }
-        line.push_back(top);
+        line.append(top);
         //bottom point of left half
         bottom = Vector2f(-i * coeffitient_x, bounds_y * coeffitient_y);
         bottom.color = Color::Red;
@@ -90,7 +90,7 @@ std::vector<sf::Vertex> sf::grid::init()
         {
             bottom.color = Color::White;
         }
-        line.push_back(bottom);
+        line.append(bottom);
     }
     for (float i = 0; i < bounds_y; i += this->step_y) //horisontal lines
     {
@@ -101,28 +101,28 @@ std::vector<sf::Vertex> sf::grid::init()
         {
             left.color = Color::White;
         }
-        line.push_back(left);
+        line.append(left);
         Vertex right = Vector2f(bounds_x * coeffitient_x, i * coeffitient_y);
         right.color = Color::Blue;
         if (i == 0)
         {
             right.color = Color::White;
         }
-        line.push_back(right);
+        line.append(right);
         left = Vector2f(-bounds_x * coeffitient_x, -i * coeffitient_y);
         left.color = Color::Red;
         if (i == 0)
         {
             left.color = Color::White;
         }
-        line.push_back(left);
+        line.append(left);
         right = Vector2f(bounds_x * coeffitient_x, -i * coeffitient_y);
         right.color = Color::Blue;
         if (i == 0)
         {
             right.color = Color::White;
         }
-        line.push_back(right);
+        line.append(right);
     }
 
     return line; //return array
